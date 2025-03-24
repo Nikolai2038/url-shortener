@@ -1,0 +1,17 @@
+meta {
+  name: Get short link
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/shortUrl
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "longUrl": "https://ya.ru"
+  }
+}
