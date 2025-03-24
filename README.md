@@ -14,6 +14,12 @@ URL shortener.
 ./gradlew build
 ```
 
+Для постоянной сборке в фоне, запустить:
+
+```sh
+./gradlew build --continuous
+```
+
 ## 4. Запуск
 
 ```sh
