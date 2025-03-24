@@ -1,14 +1,17 @@
 package url_shortener.shortener.services;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import url_shortener.shortener.entities.Redirection;
+import url_shortener.shortener.repositories.RedirectRepository;
 
 @Service
 public class ShortenerService {
-  // Разные потоки будут видеть одну и ту же коллекцию
-  private Map<String, String> shortToLongUrl = new ConcurrentHashMap<>();
+  @Autowired
+  RedirectRepository redirectRepository;
 
   public String shorten(String longUrl) {
     if (longUrl == null) {
@@ -16,11 +19,12 @@ public class ShortenerService {
     }
 
     String shortUrl = Integer.toHexString(longUrl.hashCode());
-    shortToLongUrl.put(shortUrl, longUrl);
+    redirectRepository.save(new Redirection(shortUrl, longUrl));
     return String.format("http://localhost:8080/%s", shortUrl);
   }
 
-  public String resolve(String shortUrl) {
-    return shortToLongUrl.get(shortUrl);
+  public Redirection resolve(String shortUrl) {
+    Optional<Redirection> redirection = redirectRepository.findById(shortUrl);
+    return redirection.orElse(null);
   }
 }

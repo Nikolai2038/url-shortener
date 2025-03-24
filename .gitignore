@@ -20,4 +20,8 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+# Builded executables
 **/bin
+
+# Database files
+**/*.db

@@ -15,7 +15,7 @@ public class RedirectController {
 
   @GetMapping("/{shortKey}")
   public void redirect(@PathVariable String shortKey, HttpServletResponse response) {
-    response.setHeader("Location", shortenService.resolve(shortKey));
+    response.setHeader("Location", shortenService.resolve(shortKey).getLongUrl());
 
     // Если 301, то браузер запомнит редирект и будет переходить сразу
     response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
